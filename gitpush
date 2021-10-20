@@ -1,0 +1,46 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                // Get some code from a GitHub repository
+                git credentialsId: 'Bitbuket', url: 'https://srikanth6937@bitbucket.org/srikanth6937/repo-main.git'
+            }
+        }
+        stage('login to AWS') {
+            steps {
+                sh '''
+                aws s3 ls
+                '''
+
+            }
+        }
+        stage('code push'){
+            steps {
+                sh '''
+                git_url="https://un:pwd@bitbucket.org/srikanth6937/repo-main.git"
+                aws_region="ap-southeast-2"
+                codecommit_repo_name="repo-main"
+                rm -rf ${codecommit_repo_name}
+                rm -rf /var/jenkins_home/workspace/git-sync-codecommit/${codecommit_repo_name}
+                git clone --mirror ${git_url} ${codecommit_repo_name}
+                rm -rf /var/jenkins_home/workspace/bitbucket-pipeline-job/${codecommit_repo_name}
+                cd /var/jenkins_home/workspace//bitbucket-pipeline-job
+                git push codecommit://default@${codecommit_repo_name}
+                # Push the repo to CodeCommit
+                cd ${migration_dir}
+                #git push https://git-codecommit.${aws_region}.amazonaws.com/v1/repos/${codecommit_repo_name} --all
+               # git remote add codecommit https://git-codecommit.${aws_region}.amazonaws.com/v1/repos/${codecommit_repo_name}
+               # git push -q codecommit --mirror
+                
+                #git push ssh://git-codecommit.${aws_region}.amazonaws.com/v1/repos/${codecommit_repo_name} --all
+                #git push ssh://git-codecommit.${aws_region}.amazonaws.com/v1/repos/${codecommit_repo_name} --tags
+                
+                # CleanUp - Remove local copy
+                rm -rf ${migration_dir}
+                
+                '''
+            }
+        }
+    }
+}
