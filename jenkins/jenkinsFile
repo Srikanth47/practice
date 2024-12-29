@@ -38,21 +38,26 @@ pipeline {
                     echo "Processing file: ${selectedFilePath}"
 
                     // Evaluate the selected operation
+                    def topic_opr
                     if (params.topic_operation == 'create_topic') {
-                        def topic_opr = "cluster_name=${selectedFilePath} create_topic=true"
+                        topic_opr = "cluster_name=${selectedFilePath} create_topic=true"
                         echo "Create Topic Command: ${topic_opr}"
                     } else if (params.topic_operation == 'delete_topic') {
-                        def topic_opr = "cluster_name=${selectedFilePath} delete_topic=true"
+                        topic_opr = "cluster_name=${selectedFilePath} delete_topic=true"
                         echo "Delete Topic Command: ${topic_opr}"
                     } else if (params.topic_operation == 'update_partition') {
-                        def topic_opr = "cluster_name=${selectedFilePath} update_partition=true"
+                        topic_opr = "cluster_name=${selectedFilePath} update_partition=true"
                         echo "Update Partition Command: ${topic_opr}"
                     } else {
                         echo "Invalid selection"
                     }
-                    echo "srikanth almost acheived: ${topic_opr}"
+                    echo "Srikanth almost achieved: ${topic_opr}"
+
+                    // Trigger next build job and pass `topic_opr`
+                    build job: 'Next-Build-Job', parameters: [
+                        string(name: 'TOPIC_OPERATION_DETAILS', value: topic_opr)
+                    ]
                 }
             }
         }
     }
-}
