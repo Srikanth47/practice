@@ -16,7 +16,7 @@ pipeline {
                     }
                     
                     // Get the list of files from the repository
-                    def files = sh(script: "cd practice/g_vars && find . -type f -name '*.kfk' | sed 's|^./||'", returnStdout: true).trim().split('\n')
+                    def files = sh(script: "cd g_vars && find . -type f -name '*.kfk' | sed 's|^./||'", returnStdout: true).trim().split('\n')
                     
                     // Update the dropdown choices dynamically
                     properties([
