@@ -9,7 +9,7 @@ pipeline {
             steps {
                 script {
                     // Clone the GitHub repository
-                    dir('repo') {
+                    dir('practice') {
                         checkout([$class: 'GitSCM',
                                   branches: [[name: '*/main']], // Adjust branch as needed
                                   userRemoteConfigs: [[url: params.GIT_REPO]]])
