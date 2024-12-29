@@ -32,7 +32,7 @@ pipeline {
                 echo "You selected: ${params.FILE_SELECTION}"
                 script {
                     // Process the selected file
-                    def selectedFilePath = "repo/${params.FILE_SELECTION}"
+                    def selectedFilePath = "practice/g_vars${params.FILE_SELECTION}"
                     echo "Processing file: ${selectedFilePath}"
                 }
             }
