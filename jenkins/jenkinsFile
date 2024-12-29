@@ -1,7 +1,7 @@
 pipeline {
     agent any
     parameters {
-        string(name: 'GIT_REPO', defaultValue: 'https://github.com/username/repo.git', description: 'GitHub Repository URL')
+        string(name: 'GIT_REPO', defaultValue: 'https://github.com/Srikanth47/practice.git', description: 'GitHub Repository URL')
         choice(name: 'FILE_SELECTION', choices: [], description: 'Choose a file from the repository')
     }
     stages {
@@ -32,7 +32,7 @@ pipeline {
                 echo "You selected: ${params.FILE_SELECTION}"
                 script {
                     // Process the selected file
-                    def selectedFilePath = "repo/${params.FILE_SELECTION}"
+                    def selectedFilePath = "practice/${params.FILE_SELECTION}"
                     echo "Processing file: ${selectedFilePath}"
                 }
             }
