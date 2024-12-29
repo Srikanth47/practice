@@ -36,7 +36,7 @@ pipeline {
                     def selectedFilePath = "practice/g_vars${params.FILE_SELECTION}"
                     echo "Processing file: ${selectedFilePath}"
                     // Evaluate the selected option
-                    if (params.topic_operation == 'create_topic') {
+                    /* if (params.topic_operation == 'create_topic') {
                         def create_topic = "cluster_name=${selectedFilePath} create_topic=true"
                     } else if (params.topic_operation == 'delete_topic') {
                         def delete_topic = "cluster_name=${selectedFilePath} delete_topic=true"
@@ -49,7 +49,7 @@ pipeline {
 
                     echo "topic file: ${create_topic}"
                     echo "delete_topic file: ${delete_topic}"
-                    echo "update_partition file: ${update_partition}"
+                    echo "update_partition file: ${update_partition}" */
                 }
             }
         }
