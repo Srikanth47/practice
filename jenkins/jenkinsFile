@@ -1,1 +1,41 @@
-ss
+pipeline {
+    agent any
+    parameters {
+        string(name: 'GIT_REPO', defaultValue: 'https://github.com/username/repo.git', description: 'GitHub Repository URL')
+        choice(name: 'FILE_SELECTION', choices: [], description: 'Choose a file from the repository')
+    }
+    stages {
+        stage('Fetch Files') {
+            steps {
+                script {
+                    // Clone the GitHub repository
+                    dir('repo') {
+                        checkout([$class: 'GitSCM',
+                                  branches: [[name: '*/main']], // Adjust branch as needed
+                                  userRemoteConfigs: [[url: params.GIT_REPO]]])
+                    }
+                    
+                    // Get the list of files from the repository
+                    def files = sh(script: "cd repo && find . -type f | sed 's|^./||'", returnStdout: true).trim().split('\n')
+                    
+                    // Update the dropdown choices dynamically
+                    properties([
+                        parameters([
+                            choice(name: 'FILE_SELECTION', choices: files.join('\n'), description: 'Choose a file from the repository')
+                        ])
+                    ])
+                }
+            }
+        }
+        stage('Process File') {
+            steps {
+                echo "You selected: ${params.FILE_SELECTION}"
+                script {
+                    // Process the selected file
+                    def selectedFilePath = "repo/${params.FILE_SELECTION}"
+                    echo "Processing file: ${selectedFilePath}"
+                }
+            }
+        }
+    }
+}
