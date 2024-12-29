@@ -23,6 +23,8 @@ pipeline {
                     properties([
                         parameters([
                             choice(name: 'FILE_SELECTION', choices: files.join('\n'), description: 'Choose a file from the repository')
+                            choice(name: 'TOPIC_operation', choices: ['create_topic', 'update_topic_config', 'delete_topic', 'update_partition'], description: 'Choose a file from the repository')
+
                         ])
                     ])
                 }
