@@ -1,9 +1,9 @@
 pipeline {
     agent any
-    parameters {
-        string(name: 'GIT_REPO', defaultValue: 'https://github.com/Srikanth47/practice.git', description: 'GitHub Repository URL')
-        choice(name: 'FILE_SELECTION', choices: [], description: 'Choose a file from the repository')
-    }
+    // parameters {
+    //    string(name: 'GIT_REPO', defaultValue: 'https://github.com/Srikanth47/practice.git', description: 'GitHub Repository URL')
+    //    choice(name: 'FILE_SELECTION', choices: [], description: 'Choose a file from the repository')
+    // }
     stages {
         stage('Fetch Files') {
             steps {
