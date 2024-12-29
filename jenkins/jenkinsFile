@@ -3,7 +3,7 @@ pipeline {
      parameters {
         string(name: 'GIT_REPO', defaultValue: 'https://github.com/Srikanth47/practice.git', description: 'GitHub Repository URL')
         choice(name: 'FILE_SELECTION', choices: [], description: 'Choose a file from the repository')
-        // choice(name: 'FILE_SELECTION', choices: ['create_topic', 'delete_topic', 'update_partition'], description: 'Choose a file from the repository')
+        choice(name: 'FILE_SELECTION', choices: ['create_topic', 'delete_topic', 'update_partition'], description: 'Choose a file from the repository')
     }
     stages {
         stage('Fetch Files') {
@@ -36,9 +36,10 @@ pipeline {
                     def selectedFilePath = "practice/g_vars${params.FILE_SELECTION}"
                     echo "Processing file: ${selectedFilePath}"
                     // Evaluate the selected option
-                    /* if (params.topic_operation == 'create_topic') {
+                     if (params.topic_operation == 'create_topic') {
                         def create_topic = "cluster_name=${selectedFilePath} create_topic=true"
-                    } else if (params.topic_operation == 'delete_topic') {
+                    } 
+                    /* else if (params.topic_operation == 'delete_topic') {
                         def delete_topic = "cluster_name=${selectedFilePath} delete_topic=true"
                     } else if (params.topic_operation == 'update_partition') {
                         def update_partition = "cluster_name=${selectedFilePath} update_partition=true"
